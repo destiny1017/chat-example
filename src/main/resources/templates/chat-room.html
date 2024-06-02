@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .chats{
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+        .mine{
+            background: #e9e9e9;
+            border-radius: 5px;
+        }
+        .yours{
+            background: #efef87;
+            border-radius: 5px;
+        }
+        .nickname{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .message{
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>CHAT ROOM</h1>
+<h2 th:text="'Room No. ' + ${chatRoomId}"></h2>
+<h2 th:text="'Nickname = ' + ${nickname}"></h2>
+
+<form>
+    <input type="text" id="message">
+    <input type="submit" value="전송" class="btn-send">
+</form>
+
+<div class="chats">
+    <div class="mine">
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+    var chatRoomId = [[${chatRoomId}]];
+    var nickname = [[${nickname}]];
+</script>
+<script src="/chat-room.js"></script>
+</body>
+</html>

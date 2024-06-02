@@ -23,7 +23,7 @@ public class MessageController {
     @MessageMapping("chat.enter.{chatRoomId}")
     public void enter(ChatMessage chat, @DestinationVariable String chatRoomId) {
         log.info("enter room Id = {}, chat = {}", chatRoomId, chat.toString());
-        chat.setMessage(chat.getMemberId() + "님이 입장하셨습니다.");
+        chat.setMessage(chat.getNickname() + "님이 입장하셨습니다.");
         chat.setRegDate(LocalDateTime.now());
         rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "enter.room." + chatRoomId, chat);
     }

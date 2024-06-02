@@ -13,12 +13,10 @@ import java.time.LocalDateTime;
 @ToString
 public class ChatMessage {
 
-    private Long id;
     private Long chatRoomId;
-    private Long memberId;
+    private String nickname;
 
     private String message;
-    private String region;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime regDate;
