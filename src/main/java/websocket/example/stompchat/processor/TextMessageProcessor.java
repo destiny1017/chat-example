@@ -14,12 +14,12 @@ public class TextMessageProcessor implements MessageProcessor<TextMessageForm> {
 
     private final CommonChatModule chatModule;
     @Override
-    public void handleMessage(CommonMessageForm<TextMessageForm> messageForm) {
+    public void handleMessage(CommonMessageForm<TextMessageForm> form) {
         // 1. 현재 채팅방의 마지막 sequence 증가
-        Long seq = chatModule.increaseSequence(messageForm.roomId());
+        Long seq = chatModule.increaseSequence(form.roomId());
 
         // 2. 할당 받은 sequence로 dto 생성
-        CommonMessageDto<TextMessageDto> messageDto = createDto(messageForm, seq);
+        CommonMessageDto<TextMessageDto> messageDto = createDto(form, seq);
 
         // 3. 비속어 치환
         String message = messageDto.getMessageDto().getMessage();
@@ -35,8 +35,8 @@ public class TextMessageProcessor implements MessageProcessor<TextMessageForm> {
         chatModule.sendMessage(messageDto);
 
         // 6. 첫 참여자 입장 처리
-        if(chatModule.isNewUser(messageForm.roomId(), messageForm.userId())) {
-            chatModule.joinRoomUser(messageForm.roomId(), messageForm.userId());
+        if(chatModule.isNewUser(form.roomId(), form.userId())) {
+            chatModule.joinRoomUser(form.roomId(), form.userId());
         }
     }
 

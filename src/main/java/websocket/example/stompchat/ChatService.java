@@ -11,18 +11,11 @@ import websocket.example.stompchat.processor.TextMessageProcessor;
 @RequiredArgsConstructor
 public class ChatService {
 
-    private final TextMessageProcessor textMessageProcessor;
-    private final ImageMessageProcessor imageMessageProcessor;
+    private final MessageProcessorAdapter messageProcessorAdapter;
 
     public void handleMessage(CommonMessageForm<?> messageForm) {
-        MessageProcessor processor = getProcessor(messageForm.messageType());
+        MessageProcessor processor = messageProcessorAdapter.getProcessor(messageForm.messageType());
         processor.handleMessage(messageForm);
     }
 
-    private MessageProcessor<?> getProcessor(MessageType messageType) {
-        return switch (messageType) {
-            case TEXT -> textMessageProcessor;
-            case IMAGE -> imageMessageProcessor;
-        };
-    }
 }
